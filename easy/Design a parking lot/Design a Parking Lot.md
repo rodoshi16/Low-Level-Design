@@ -9,13 +9,13 @@ system should track availability of slots and provide real time information to c
 
 classes and objects:
 
-- ParkingLot, ParkingSpot, Vehicle, ParkingLevel
+- ParkingLot, ParkingSpot, Vehicle, ParkingLevel, Ticket 
 
 - ParkingLot:
 * self.levels = [Level Objects]
 * list of parking lot slots
-* park(Vehicle): loop through levels and check which is not full, call level.find_spot
-* exit(vehicle): free the data structure - change the status and isFull to False
+* park(Vehicle): loop through levels and check which is not full, call level.find_spot - if true create a ticket object for that vehicle
+* exit(vehicle): free the data structure - change the status and isFull to False, update the ticket of the vehicle with price 
 
 
 ParkingLevel:
@@ -30,6 +30,9 @@ ParkingLevel:
 
 - Vehicle:
 
-* Id, type, parking_slot
+* Id, type, parking_slot, ticket
+
+- Ticket:
+* vehicle, spot, entry_time, exit_time, price
 
 
