@@ -1,6 +1,7 @@
 from __future__ import annotations
 from typing import Optional
 from enum import Enum
+import threading
 
 class Type(Enum):
     CAR = "car"
@@ -51,7 +52,6 @@ class ParkingLot:
             slot = level.find_spot()
             if slot != -1:
                 V.slot = slot
-                slot.status = Status.OCCUPIED
                 t = Ticket(V, time)
                 V.ticket = t
                 return True
@@ -72,12 +72,15 @@ class ParkingLevel:
         self.level = level
         self.spots = spots
         self.isFull = False
+        self.lock = threading.Lock()
     
     def find_spot(self):
-        for s in self.spots:
-            if s.status == Status.EMPTY:
-                return s
-        self.isFull = True 
+        with self.lock:
+            for s in self.spots:
+                if s.status == Status.EMPTY:
+                    s.status = Status.OCCUPIED
+                    return s
+            self.isFull = True 
         return -1
 
 class ParkingSpot:
