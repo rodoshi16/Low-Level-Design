@@ -92,3 +92,5 @@ class ParkingSpot:
         self.level = level
         self.type = t
         self.status = Status.EMPTY
+
+
