@@ -63,7 +63,6 @@ class ParkingLot:
         V.slot.status = Status.EMPTY
         V.slot.level.isFull = False
 
-
 class ParkingLevel:
     level: ParkingLevel
     spots: ParkingSpot
