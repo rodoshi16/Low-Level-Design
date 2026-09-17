@@ -10,6 +10,7 @@ Functional requirements:
 - handle concurrency
 - handle data consistency
 - completed tasks are stored in a diff data structure
+- task state
 
 
 Identify Entities:
