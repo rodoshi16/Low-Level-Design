@@ -11,11 +11,17 @@ Entities:
 
 OrderBook
 
-- self.buys: List of Order
-- self.sells: List of Order
-* matching() -> bool: if trade happens, return True, otherwise 
-* add_order(order)
+- self.price_levels = {price: [Doubly Linked List]}
+- self.ids = {id: Node}
+* matching() -> bool:
+* add_order(order): 
+
+check if order.price already in self.price_levels
+update self.id
+
 * cancel_order(order)
+
+- find Node from self.id and delete 
 
 
 Tradeoffs:
@@ -23,6 +29,13 @@ Tradeoffs:
 - buys asc, sells desc 0(1), add 0(n), 0(n): list
 - heap, 0(1) access to highest bid, log(n) to insert
 - PQ, (price, time) -> Order object, dict: {id: Order}, cancellation: 0(1)
+
+Ideal Data structure ordering:
+
+- {price: [Doubly Linked list of orders of that price based on time]}
+- {id: Node}
+BUT you cannot just have a normal hashmap with prices - not gonna be sorted order 
+- keep a sorted order hashmap so you can have 
 
 
 Order
@@ -33,3 +46,5 @@ Order
 - side
 - filled_amount
 - type
+
+
