@@ -11,17 +11,19 @@ Entities:
 
 OrderBook
 
-- self.price_levels = {price: [Doubly Linked List]}
+- self.buy_prices = {price: [Doubly Linked List]}
+- self.sell_prices = {price: [Doubly Linked List]}
 - self.ids = {id: Node}
 * matching() -> bool:
+pull from the highest bid and lowest price and check if trade happens
+
+
 * add_order(order): 
 
-check if order.price already in self.price_levels
-update self.id
+check if the price already exists, then add to the list otherwise create the price and add the Node
 
 * cancel_order(order)
-
-- find Node from self.id and delete 
+find the Node and delete itself
 
 
 Tradeoffs:
@@ -46,5 +48,7 @@ Order
 - side
 - filled_amount
 - type
+
+
 
 
