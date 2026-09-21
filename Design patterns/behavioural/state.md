@@ -103,8 +103,10 @@ class ATM:
     def withdraw(self):
         self.state.withdraw(self)
 
-        
+
 ```
+
+NOTE THE TRADEOFF: this can def create more code since you need to write all operations for each state - discuss with interviewer
 
 
 
