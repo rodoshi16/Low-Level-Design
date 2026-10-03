@@ -29,6 +29,10 @@ Player:
 
 For each of the four orientations, I can traverse n cells in each director. Thats a constant number of traversals: 0(n) + 0(n) + 0(n) + 0(n) ~ 0(n)
 
+Edges:
+
+- if a player tries to make a move after the game has already ended: 
+
 
 
 
