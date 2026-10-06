@@ -69,10 +69,10 @@ class Tic-Tac-Toe:
             self.spots.append([.] * 3)
         self.players = [X, O]
         self.occupied = 0 
-    self.State = State.EMPTY
+        self.State = State.EMPTY
     
     def make_move(self, Player, row, col) -> Optional[Str]:
-        if 0 <= row <= 3 and 0 <= col <= 3 and self.State != State.END and self.State != State.FULL and self.spots[row][col] == [.]:
+        if 0 <= row < 3 and 0 <= col < 3 and self.State != State.END and self.State != State.FULL and self.spots[row][col] == [.]:
             self.spots[row][col] = Player.Side
             if check_streak(self, row, col, Player):
                 self.State = END
@@ -83,29 +83,40 @@ class Tic-Tac-Toe:
         else:
             raise ValueError
     
-    def check_streak(self, row, col, Player):
+    def check_streak(self, r, c, Player):
         #check for diagonals
         count = 0
-        while row <= 3:
+        row = r
+        col = c
+
+        while row < 3:
             if self.spots[row][col] == Player.Side:
                 count += 1
             row += 1
+
+        row = r
+        col = c
 
         while row >= 0:
             if self.spots[row][col] == Player.Side:
                 count += 1
             row -= 1 
+        
+        row = r
+        col = c
 
         if count == 3:
             return True
         
         count = 0
         
-        while col <= 3:
+        while col < 3:
             if self.spots[row][col] == Player.Side:
                 count += 1
-            count += 1
+            col += 1
 
+        row = r
+        col = c
         
         while col >= 0:
             if self.spots[row][col] == Player.Side:
@@ -118,6 +129,8 @@ class Tic-Tac-Toe:
 class Player:
     def __init__(self, side):
         self.Side = side
+    
+    
 
         
 
