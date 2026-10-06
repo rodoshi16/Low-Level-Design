@@ -6,7 +6,7 @@ from enum import Enum
 
 - 2 players X,0
 - playing a 3x3
-- move(row, col)
+- players can make a move(row, col)
 - if cell is occupied: reject
 - game end when someone wins or board is full 
 
@@ -17,84 +17,107 @@ Core features:
 
 
 
-Classes:
+classes:
 
-Tic-Tac-toe
-- board : 3 by 3 of empty slots
-- players: X or 0
-- current player
-- game state
-
-+ make_move(Player, row, col): check if valid and place side
-+ check_streak(row, col):
-
-Player:
-- side
-
-For each of the four orientations, I can traverse n cells in each director. Thats a constant number of traversals: 0(n) + 0(n) + 0(n) + 0(n) ~ 0(n)
-
-Edges:
-
-- if a player tries to make a move after the game has already ended: 
-
-"""
-
-enum class Side:
+class Player(Enum):
     X = "X"
-    O = "0"
+    0 = "0"
 
-
-enum class State:
-    full = "full"
-    X.winner = "X.winner"
-    Y.winner = "Y.winner"
+class State(Enum):
+    END = "THE GAME IS OVER"
+    FULL = "THE BOARD IS FULL, ITS A DRAW"
+    X.WINNER = "X IS THE WINNER"
+    Y.WINNER = "Y IS THE WINNER"
 
 
 class Tic-Tac-Toe:
-    board: List
+    - self.spots: [.] *3
+    - self.players: enum class (of X or 0)
+    - self.occupied: 0 
+
+    + make_move(Player, row, col): in this class because player doesnt have internal details of the board
+
+    check if row, col is invalid and if not empty - raise error
+    and the state is not ended then place a move and check for streak
+    if streak, end the game and display the winner, set state of game to end
+    if no streak, check if 9-self.occupied == 0, change state to full and return msg
+
+
+    + check_streak(self, row, col): check horizontal, vertical to see if theres a count of least 3 in one direction
+   
+
+class Player:
+    - side: enum class
+
+
+"""
+
+class Side(Enum):
+    X = "X"
+    O = "0"
+
+class State(Enum):
+    END = "THE GAME IS OVER"
+    EMPTY = "THE BOARD IS EMPTY"
+    FULL = "THE BOARD IS FULL, ITS A DRAW"
+
+class Tic-Tac-Toe:
+    self.spots: List
     def __init__(self):
+        self.spots = []
         for i in range(3):
-            self.board = [[.]* 3]
-        self.players = [Side.X, Side.O]
+            self.spots.append([.] * 3)
+        self.players = [X, O]
+        self.occupied = 0 
+    self.State = State.EMPTY
     
-    def make_move(self, Player, row, col):
-        if 0 <= row <= 3 and 0 <= col <= 3 and board[row][col] == [.]:
-            board[row][col] = Player.side
-            self.check_streak(Player, row, col)
+    def make_move(self, Player, row, col) -> Optional[Str]:
+        if 0 <= row <= 3 and 0 <= col <= 3 and self.State != State.END and self.State != State.FULL and self.spots[row][col] == [.]:
+            self.spots[row][col] = Player.Side
+            if check_streak(self, row, col, Player):
+                self.State = END
+                return f'{Player.Side} is the Winner!!!'
+            else:
+                return None
+
         else:
             raise ValueError
-
-    def check_streak(self, Player, row, col):
-        r = row
-        c = col
-
+    
+    def check_streak(self, row, col, Player):
+        #check for diagonals
         count = 0
+        while row <= 3:
+            if self.spots[row][col] == Player.Side:
+                count += 1
+            row += 1
 
-        while r < 3:
-            r += 1
-            if board[r][c] == Player.Side:
-                count += 1 
+        while row >= 0:
+            if self.spots[row][col] == Player.Side:
+                count += 1
+            row -= 1 
+
+        if count == 3:
+            return True
         
-        while c < 3:
-            c += 1
-            if board[r][c] == Player.Side:
-                count += 1 
+        count = 0
         
-        while r > 0:
-            r -= 1
-            if board[r][c] == Player.Side:
-                count += 1 
+        while col <= 3:
+            if self.spots[row][col] == Player.Side:
+                count += 1
+            count += 1
+
         
-        while c > 0:
-            c -= 1
-            if board[r][c] == Player.Side:
-                count += 1 
+        while col >= 0:
+            if self.spots[row][col] == Player.Side:
+                count += 1
+            col -= 1
+        
+        if count == 3:
+            return True
 
 class Player:
     def __init__(self, side):
-        self.side = side
-    
-
-
+        self.Side = side
 
         
+
