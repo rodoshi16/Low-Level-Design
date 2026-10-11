@@ -13,7 +13,15 @@ class Task Management:
             if user_id in self.users:
                 t = Task(name, des, due_date, priority, assignee_id)
                 self.map[user_id].append(t)
-            t.add_observer.append(User)
+                self.tasks[t.id] = t
+            t.add_observer.append(self.users[assignee_id])
+        
+        def delete_task(self, task_id):
+            if task_id in self.tasks:
+                del self.task[task_id]
+        
+        def search_task(self, sorting_strategy:Strategy):
+            
 
 class TaskStatus(Enum):
     IN_PROGRESS = "In progress"
