@@ -20,8 +20,15 @@ class Task Management:
             if task_id in self.tasks:
                 del self.task[task_id]
         
-        def search_task(self, sorting_strategy:Strategy):
+        def search_task(self, keyword: str, sorting_strategy:Strategy):
+            matching_tasks = []
+
+            for task in self.tasks:
+                if keyword.lower() in task.name() or keyword.lower() in task.des.lower():
+                    matching_tasks.append(task)
             
+            sorting_strategy(matching_tasks)
+            return matching_tasks
 
 class TaskStatus(Enum):
     IN_PROGRESS = "In progress"
