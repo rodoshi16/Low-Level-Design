@@ -43,7 +43,7 @@ class User:
         self.email = email
 
 class Task:
-    def __init__(self, name, des, due_date, priority, assignee_id):
+    def __init__(self, builder):
         self.userid = str(uuid.uuid4())
         self.name = name
         self.des = des
@@ -63,3 +63,34 @@ class Task:
     def notify_observers(self, change_type):
         for observer in self._observers:
             observer.update(self, change_type)
+
+
+    class TaskBuilder:
+        def __init__(self, name):
+            self.name = name
+            self._des = ""
+            self.due_date = None
+            self._priority = None
+            self.assignee_id = None
+        
+        def des(self, des):
+            self._des = des
+            return self 
+        
+        def des(self, due_date):
+            self._due_date = due_date
+            return self 
+        
+        def priority(self, priority: TaskPriority) -> 'Task.TaskBuilder':
+            self._priority = priority
+            return self
+        
+        def assignee(self, assignee: User) -> 'Task.TaskBuilder':
+            self._assignee = assignee
+            return self
+        
+        def build(self):
+            return Task(self)        
+        
+          
+        
